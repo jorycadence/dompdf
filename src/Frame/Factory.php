@@ -60,7 +60,7 @@ class Factory
      *
      * @param Frame $frame   The frame to decorate
      * @param Dompdf $dompdf The dompdf instance
-     * @param Frame $root    The frame to decorate
+     * @param Frame $root    The root of the frame
      *
      * @throws Exception
      * @return AbstractFrameDecorator
@@ -68,16 +68,14 @@ class Factory
      */
     static function decorate_frame(Frame $frame, Dompdf $dompdf, Frame $root = null)
     {
-        if (is_null($dompdf)) {
-            throw new Exception("The DOMPDF argument is required");
-        }
-
         $style = $frame->get_style();
 
-        // Floating (and more generally out-of-flow) elements are blocks
-        // http://coding.smashingmagazine.com/2007/05/01/css-float-theory-things-you-should-know/
-        if (!$frame->is_in_flow() && in_array($style->display, Style::$INLINE_TYPES)) {
-            $style->display = "block";
+        // Floating (and more generally out-of-flow) elements are block-level
+        // https://www.w3.org/TR/CSS21/visuren.html#dis-pos-flo
+        if (!$frame->is_in_flow()
+            && in_array($style->display, Style::INLINE_LEVEL_TYPES, true)
+        ) {
+            $style->display = $style->display === "inline-table" ? "table" : "block";
         }
 
         $display = $style->display;
