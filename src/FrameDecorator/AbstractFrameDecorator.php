@@ -705,6 +705,8 @@ abstract class AbstractFrameDecorator extends Frame
             $style->margin_bottom = 0;
             $style->padding_bottom = 0;
             $style->border_bottom = 0;
+            $style->border_bottom_left_radius = 0;
+            $style->border_bottom_right_radius = 0;
 
             // second
             $orig_style = $split->get_original_style();
@@ -712,6 +714,8 @@ abstract class AbstractFrameDecorator extends Frame
             $orig_style->margin_top = 0;
             $orig_style->padding_top = 0;
             $orig_style->border_top = 0;
+            $orig_style->border_top_left_radius = 0;
+            $orig_style->border_top_right_radius = 0;
             $orig_style->page_break_before = "auto";
         }
 
